@@ -10,15 +10,21 @@ public interface Azimuth {
     }
 
     static double toMath(double azimuth) {
-        return azimuth / 360 * Math2.PI2;
+        System.out.println("Given : " + azimuth);
+        double angle = Math.toRadians(azimuth);
+        Preconditions.checkArgument(isCanonical(angle));
+        System.out.println("Returning : " + angle);
+        return angle;
     }
 
     static double fromMath(double angle) {
+        Preconditions.checkArgument(isCanonical(angle));
         return angle / Math2.PI2 * 360;
     }
 
     static String toOctantString(double azimuth, String n, String e, String s,
             String w) {
+        Preconditions.checkArgument(isCanonical(azimuth));
         StringBuilder sb = new StringBuilder();
         double caz = canonicalize(azimuth);
         if (caz <= 67.5 || caz >= 292.5)

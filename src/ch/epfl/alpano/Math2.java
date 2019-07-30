@@ -1,10 +1,13 @@
 package ch.epfl.alpano;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.scalb;
+
 import java.util.function.DoubleUnaryOperator;
 
 public interface Math2 {
 
-    public double PI2 = Math.PI * 2;
+    public double PI2 = scalb(PI, 1);
 
     public static double sq(double x) {
         return x * x;
@@ -36,15 +39,12 @@ public interface Math2 {
     public static double firstIntervalContainingRoot(DoubleUnaryOperator f,
             double minX, double maxX, double dX) {
         double x = minX;
-        while (x + dX < maxX) {
+        while (x + dX <= maxX) {
             if (!areSameSign(f.applyAsDouble(x), f.applyAsDouble(x + dX))) {
-                System.out.println("FOUND! " + f.applyAsDouble(x) + " "
-                        + f.applyAsDouble(x + dX));
 
                 return x;
             }
-            System.out.println(
-                    f.applyAsDouble(x) + " " + f.applyAsDouble(x + dX));
+
             x += dX;
         }
         if (!areSameSign(f.applyAsDouble(maxX - dX), f.applyAsDouble(maxX)))
