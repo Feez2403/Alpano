@@ -7,7 +7,17 @@ import java.util.function.DoubleUnaryOperator;
 
 public interface Math2 {
 
-    public double PI2 = scalb(PI, 1);
+    // rajoutée
+    public static int min(int v1, int v2) {
+        return (v1 < v2 ? v1 : v2);
+    }
+
+    // rajoutée
+    public static int max(int v1, int v2) {
+        return (v1 > v2 ? v1 : v2);
+    }
+
+    public final static double PI2 = scalb(PI, 1);
 
     public static double sq(double x) {
         return x * x;

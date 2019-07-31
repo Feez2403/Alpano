@@ -5,13 +5,13 @@ import static ch.epfl.alpano.Math2.PI2;
 import static ch.epfl.alpano.Math2.haversin;
 import static java.lang.Math.PI;
 import static java.lang.Math.asin;
-import static java.lang.Math.atan;
+import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
 public final class GeoPoint {
-    final double longitude, latitude;
+    private final double longitude, latitude;
 
     public GeoPoint(double longitude, double latitude) {
         Preconditions.checkArgument(longitude > (-PI) && longitude < PI);
@@ -36,11 +36,12 @@ public final class GeoPoint {
                                 * haversin(this.longitude - that.longitude)));
     }
 
-    double azimuthTo(GeoPoint that) {
-        return atan((sin(this.longitude - that.longitude) * cos(that.latitude))
-                / (cos(this.latitude) * sin(that.latitude)
+    public double azimuthTo(GeoPoint that) {
+        return Math.abs(atan2(
+                (sin(this.longitude - that.longitude) * cos(that.latitude)),
+                (cos(this.latitude) * sin(that.latitude)
                         - sin(this.latitude) * cos(that.latitude)
-                                * cos(this.longitude - that.longitude)));
+                                * cos(this.longitude - that.longitude))));
     }
 
     @Override
