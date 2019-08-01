@@ -24,6 +24,11 @@ public final class Interval2D {
         return iX.contains(x) && iY.contains(y);
     }
 
+    private boolean contains(Interval2D that) {
+        return this.contains(that.iX.includedFrom(), that.iY.includedFrom())
+                && this.contains(that.iX.includedTo(), that.iY.includedTo());
+    }
+
     public int size() {
         return iX.size() * iY.size();
     }
@@ -39,8 +44,10 @@ public final class Interval2D {
     }
 
     public boolean isUnionableWith(Interval2D that) {
-        return this.iX.isUnionableWith(that.iX)
-                && this.iY.isUnionableWith(that.iY);
+        return this.contains(that) || that.contains(this)
+                || (this.iX.equals(that.iX) && this.iY.isUnionableWith(that.iY))
+                || (this.iY.equals(that.iY)
+                        && this.iX.isUnionableWith(that.iX));
     }
 
     public Interval2D union(Interval2D that) {

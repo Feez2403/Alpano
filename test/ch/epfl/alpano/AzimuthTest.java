@@ -110,7 +110,6 @@ public class AzimuthTest {
 
     @Test(expected = java.lang.IllegalArgumentException.class)
     public void toMathThrowsFor2Pi() {
-        System.out.println("Testing with 2PI");
         toMath(scalb(PI, 1));
     }
 

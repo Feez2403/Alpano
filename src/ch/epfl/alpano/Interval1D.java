@@ -37,7 +37,7 @@ public final class Interval1D {
             if (this.includedTo < that.includedFrom) {
                 return 0;
             } else if (this.includedTo < that.includedTo) {
-                return this.includedTo - that.includedFrom;
+                return this.includedTo - that.includedFrom + 1;
             } else {
                 return that.size();
             }
@@ -45,7 +45,7 @@ public final class Interval1D {
             if (that.includedTo < this.includedFrom) {
                 return 0;
             } else if (that.includedTo < this.includedTo) {
-                return that.includedTo - this.includedFrom;
+                return that.includedTo - this.includedFrom + 1;
             } else {
                 return this.size();
             }
@@ -53,18 +53,19 @@ public final class Interval1D {
     }
 
     public Interval1D boundingUnion(Interval1D that) {
-        return new Interval1D(this.includedFrom, that.includedTo);
+        return new Interval1D(min(this.includedFrom, that.includedFrom),
+                max(this.includedTo, that.includedTo));
     }
 
     public boolean isUnionableWith(Interval1D that) {
-        return (this.includedTo < that.includedFrom - 1
-                || that.includedTo < this.includedFrom - 1);
+        return this.includedFrom < that.includedFrom
+                ? (this.includedTo >= that.includedFrom - 1)
+                : (that.includedTo >= this.includedFrom - 1);
     }
 
     public Interval1D union(Interval1D that) {
-        Preconditions.checkArgument(isUnionableWith(that));
-        return new Interval1D(min(this.includedFrom, that.includedFrom),
-                max(this.includedTo, that.includedTo));
+        Preconditions.checkArgument(this.isUnionableWith(that));
+        return boundingUnion(that);
     }
 
     @Override
