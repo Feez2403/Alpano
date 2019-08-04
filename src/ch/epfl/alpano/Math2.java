@@ -7,15 +7,23 @@ import java.util.function.DoubleUnaryOperator;
 
 public interface Math2 {
 
-    // rajoutée
+    ////////////// rajoutées/////////////////
     public static int min(int v1, int v2) {
         return (v1 < v2 ? v1 : v2);
     }
 
-    // rajoutée
     public static int max(int v1, int v2) {
         return (v1 > v2 ? v1 : v2);
     }
+
+    public static int roof(double x) {
+        int x0 = (int) x;
+        if (x - x0 == 0)
+            return x0;
+        return x0 + 1;
+    }
+
+    ////////////////////////////////////////
 
     public final static double PI2 = scalb(PI, 1);
 
@@ -43,6 +51,7 @@ public interface Math2 {
             double x, double y) {
         double z1 = lerp(z00, z10, x);
         double z2 = lerp(z01, z11, x);
+
         return lerp(z1, z2, y);
     }
 
