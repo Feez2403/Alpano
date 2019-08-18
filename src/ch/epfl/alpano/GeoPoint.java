@@ -10,6 +10,8 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
+import java.util.Objects;
+
 public final class GeoPoint {
     private final double longitude, latitude;
 
@@ -48,5 +50,17 @@ public final class GeoPoint {
     public String toString() {
         return String.format("(%.4f, %.4f)", longitude / PI2 * 360,
                 latitude / PI2 * 360);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof GeoPoint
+                && ((GeoPoint) obj).latitude == this.latitude
+                && ((GeoPoint) obj).longitude == this.longitude;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.latitude, this.longitude);
     }
 }
